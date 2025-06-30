@@ -30,10 +30,15 @@ public class Menu extends javax.swing.JFrame {
         
         // ===== CONFIGURACIÓN DE LABELS =====
         // Institución
-        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+         jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
         jLabel1.setForeground(Color.WHITE);
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel1.setText("Tecnológico de Estudios Superiores de Coacalco");
+        jLabel1.setText("Tecnológico de Estudios Superiores");
+        
+        jLabel10.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel10.setForeground(Color.WHITE);
+        jLabel10.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel10.setText("de Coacalco");
         
         // Materia
         jLabel2.setFont(new Font("Arial", Font.BOLD, 14));
@@ -47,28 +52,21 @@ public class Menu extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel3.setText("Profesor: Roberto Carlos Muñoz Celaya");
         
-        // Equipo
-        jLabel4.setFont(new Font("Arial", Font.BOLD, 12));
+        // Integrantes
+        jLabel4.setFont(new Font("Arial", Font.BOLD, 11));
         jLabel4.setForeground(Color.WHITE);
         jLabel4.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel4.setText("Equipo:");
-        
-        // Integrantes
+        jLabel4.setText("Equipo: • Aguilar Moreno Luis Alberto");
+       
         jLabel5.setFont(new Font("Arial", Font.PLAIN, 11));
         jLabel5.setForeground(Color.WHITE);
         jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel5.setText("• Aguilar Moreno Luis Alberto");
+        jLabel5.setText("• Gómez González Kaori");
         
         jLabel6.setFont(new Font("Arial", Font.PLAIN, 11));
         jLabel6.setForeground(Color.WHITE);
         jLabel6.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel6.setText("• Gómez González Kaori");
-        
-        // Agregar el tercer integrante (usando jLabel7 que está disponible)
-        jLabel7.setFont(new Font("Arial", Font.PLAIN, 11));
-        jLabel7.setForeground(Color.WHITE);
-        jLabel7.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel7.setText("• González Dolores Carlos Daniel");
+        jLabel6.setText("• González Dolores Carlos Daniel");
         
         // ===== CONFIGURACIÓN DE PANELES DE LOGOS =====
         jPanel2.setOpaque(false); // Transparente
