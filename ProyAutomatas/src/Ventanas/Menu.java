@@ -16,41 +16,160 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         
-   try {
-    // Cargar y redimensionar con tamaño fijo
-    ImageIcon iconTesco = new ImageIcon(getClass().getResource("/img/logotesco.png"));
-    Image imgTesco = iconTesco.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-    jLabel8.setIcon(new ImageIcon(imgTesco));
-    
-    ImageIcon iconTecNM = new ImageIcon(getClass().getResource("/img/logotecnm.png"));
-    Image imgTecNM = iconTecNM.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-    jLabel9.setIcon(new ImageIcon(imgTecNM));
-    
-} catch (Exception e) {
-    System.out.println("Error al cargar imágenes: " + e.getMessage());
-    // Poner texto alternativo si no se pueden cargar las imágenes
-    jLabel8.setText("TESCO");
-    jLabel9.setText("TecNM");
-}
-
-
-
-// Limpiar los paneles antes (por si tienen algo dentro)
-    jPanel3.removeAll();
-    jPanel2.removeAll();
-
-// Agregar los logos al centro del panel
-    jPanel3.setLayout(new BorderLayout());
-    jPanel2.setLayout(new BorderLayout());
-    jPanel3.add(jLabel8, BorderLayout.CENTER);
-    jPanel2.add(jLabel9, BorderLayout.CENTER);
-
-// Refrescar los paneles para que se vean los cambios
-    jPanel3.revalidate();
-    jPanel3.repaint();
-    jPanel2.revalidate();
-    jPanel2.repaint();
-
+       setTitle("Analizadores Léxico y Sintáctico");
+        setLocationRelativeTo(null);
+        setResizable(false);
+        getContentPane().setBackground(new Color(245, 245, 245));
+        
+        // ===== CONFIGURACIÓN DEL PANEL PRINCIPAL =====
+        jPanel1.setBackground(new Color(76, 175, 80)); // Verde principal
+        jPanel1.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createRaisedBevelBorder(),
+            BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        ));
+        
+        // ===== CONFIGURACIÓN DE LABELS =====
+        // Institución
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel1.setForeground(Color.WHITE);
+        jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel1.setText("Tecnológico de Estudios Superiores de Coacalco");
+        
+        // Materia
+        jLabel2.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel2.setForeground(Color.WHITE);
+        jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel2.setText("Autómatas I");
+        
+        // Profesor
+        jLabel3.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel3.setForeground(Color.WHITE);
+        jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel3.setText("Profesor: Roberto Carlos Muñoz Celaya");
+        
+        // Equipo
+        jLabel4.setFont(new Font("Arial", Font.BOLD, 12));
+        jLabel4.setForeground(Color.WHITE);
+        jLabel4.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel4.setText("Equipo:");
+        
+        // Integrantes
+        jLabel5.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel5.setForeground(Color.WHITE);
+        jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel5.setText("• Aguilar Moreno Luis Alberto");
+        
+        jLabel6.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel6.setForeground(Color.WHITE);
+        jLabel6.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel6.setText("• Gómez González Kaori");
+        
+        // Agregar el tercer integrante (usando jLabel7 que está disponible)
+        jLabel7.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel7.setForeground(Color.WHITE);
+        jLabel7.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel7.setText("• González Dolores Carlos Daniel");
+        
+        // ===== CONFIGURACIÓN DE PANELES DE LOGOS =====
+        jPanel2.setOpaque(false); // Transparente
+        jPanel3.setOpaque(false); // Transparente
+        
+        // ===== CONFIGURACIÓN DE BOTONES =====
+        // Título de analizadores (reutilizando un label existente o el espacio)
+        
+        // Botón Léxico
+        Lexico.setText("Analizador Léxico");
+        Lexico.setFont(new Font("Arial", Font.BOLD, 14));
+        Lexico.setBackground(new Color(76, 175, 80));
+        Lexico.setForeground(Color.WHITE);
+        Lexico.setBorder(BorderFactory.createEmptyBorder(12, 25, 12, 25));
+        Lexico.setFocusPainted(false);
+        Lexico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Lexico.setPreferredSize(new Dimension(180, 45));
+        
+        // Botón Sintáctico
+        Sintactico.setText("Analizador Sintáctico");
+        Sintactico.setFont(new Font("Arial", Font.BOLD, 14));
+        Sintactico.setBackground(new Color(76, 175, 80));
+        Sintactico.setForeground(Color.WHITE);
+        Sintactico.setBorder(BorderFactory.createEmptyBorder(12, 25, 12, 25));
+        Sintactico.setFocusPainted(false);
+        Sintactico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Sintactico.setPreferredSize(new Dimension(180, 45));
+        
+        // ===== EFECTOS HOVER PARA BOTONES =====
+        // Hover para botón Léxico
+        Lexico.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Lexico.setBackground(new Color(67, 160, 71)); // Verde más oscuro
+            }
+            
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Lexico.setBackground(new Color(76, 175, 80)); // Verde original
+            }
+        });
+        
+        // Hover para botón Sintáctico
+        Sintactico.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Sintactico.setBackground(new Color(67, 160, 71)); // Verde más oscuro
+            }
+            
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Sintactico.setBackground(new Color(76, 175, 80)); // Verde original
+            }
+        });
+        
+        // ===== CONFIGURACIÓN DE LOGOS =====
+        try {
+            // Cargar y redimensionar logos
+            ImageIcon iconTesco = new ImageIcon(getClass().getResource("/img/logotesco.png"));
+            Image imgTesco = iconTesco.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            jLabel8.setIcon(new ImageIcon(imgTesco));
+            jLabel8.setText(""); // Quitar texto por defecto
+            
+            ImageIcon iconTecNM = new ImageIcon(getClass().getResource("/img/logotecnm.png"));
+            Image imgTecNM = iconTecNM.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            jLabel9.setIcon(new ImageIcon(imgTecNM));
+            jLabel9.setText(""); // Quitar texto por defecto
+            
+        } catch (Exception e) {
+            System.out.println("Error al cargar imágenes: " + e.getMessage());
+            // Configurar texto alternativo con estilo
+            jLabel8.setText("TESCO");
+            jLabel8.setFont(new Font("Arial", Font.BOLD, 14));
+            jLabel8.setForeground(Color.WHITE);
+            jLabel8.setHorizontalAlignment(SwingConstants.CENTER);
+            
+            jLabel9.setText("TecNM");
+            jLabel9.setFont(new Font("Arial", Font.BOLD, 14));
+            jLabel9.setForeground(Color.WHITE);
+            jLabel9.setHorizontalAlignment(SwingConstants.CENTER);
+        }
+        
+        // ===== CONFIGURACIÓN FINAL DE PANELES =====
+        // Limpiar y configurar paneles de logos
+        jPanel2.removeAll();
+        jPanel3.removeAll();
+        
+        jPanel2.setLayout(new BorderLayout());
+        jPanel3.setLayout(new BorderLayout());
+        
+        jPanel2.add(jLabel9, BorderLayout.CENTER); // TecNM
+        jPanel3.add(jLabel8, BorderLayout.CENTER); // TESCO
+        
+        // Refrescar paneles
+        jPanel2.revalidate();
+        jPanel2.repaint();
+        jPanel3.revalidate();
+        jPanel3.repaint();
+        
+        // ===== CONFIGURACIÓN FINAL DE LA VENTANA =====
+        pack();
     }
 
     /**
