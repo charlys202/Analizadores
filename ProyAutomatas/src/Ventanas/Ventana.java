@@ -1,4 +1,7 @@
 package Ventanas;
+
+import javax.swing.*;
+import java.awt.*;
 import Analizadores.Analizador_Lexico;
 import Analizadores.analisis_sintactico;
 import java.io.BufferedReader;
@@ -23,6 +26,109 @@ public class Ventana extends javax.swing.JFrame {
      */
     public Ventana() {
         initComponents();
+
+        setTitle("Analizador Sintáctico - Autómatas I");
+setLocationRelativeTo(null);
+setResizable(false);
+getContentPane().setBackground(new Color(245, 245, 245));
+
+// ===== CONFIGURACIÓN DE LABELS =====
+// Título principal
+jLabel1.setFont(new Font("Arial", Font.BOLD, 18));
+jLabel1.setForeground(new Color(76, 175, 80));
+jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
+
+// Label de instrucción
+jLabel2.setFont(new Font("Arial", Font.BOLD, 12));
+jLabel2.setForeground(new Color(60, 60, 60));
+
+// ===== CONFIGURACIÓN DE CAMPOS DE TEXTO =====
+// Campo de entrada de código
+jTextField1.setFont(new Font("Consolas", Font.PLAIN, 12));
+jTextField1.setBorder(BorderFactory.createCompoundBorder(
+    BorderFactory.createLineBorder(new Color(76, 175, 80), 2),
+    BorderFactory.createEmptyBorder(5, 10, 5, 10)
+));
+jTextField1.setBackground(Color.WHITE);
+
+// Campo de resultado
+jTextField3.setFont(new Font("Consolas", Font.PLAIN, 11));
+jTextField3.setBorder(BorderFactory.createCompoundBorder(
+    BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+    BorderFactory.createEmptyBorder(5, 10, 5, 10)
+));
+jTextField3.setBackground(new Color(248, 248, 248));
+jTextField3.setEditable(false);
+
+// ===== CONFIGURACIÓN DE BOTONES =====
+// Botón Analizar
+jButton1.setText("Analizar Código");
+jButton1.setFont(new Font("Arial", Font.BOLD, 14));
+jButton1.setBackground(new Color(76, 175, 80));
+jButton1.setForeground(Color.WHITE);
+jButton1.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+jButton1.setFocusPainted(false);
+jButton1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+jButton1.setPreferredSize(new Dimension(150, 40));
+
+// Botón Limpiar
+Limpiar.setFont(new Font("Arial", Font.BOLD, 12));
+Limpiar.setBackground(new Color(255, 193, 7)); // Amarillo
+Limpiar.setForeground(Color.WHITE);
+Limpiar.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+Limpiar.setFocusPainted(false);
+Limpiar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+// Botón Regresar
+Regresar.setFont(new Font("Arial", Font.BOLD, 12));
+Regresar.setBackground(new Color(108, 117, 125)); // Gris
+Regresar.setForeground(Color.WHITE);
+Regresar.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+Regresar.setFocusPainted(false);
+Regresar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+// ===== EFECTOS HOVER PARA BOTONES =====
+// Hover para botón Analizar
+jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseEntered(java.awt.event.MouseEvent evt) {
+        jButton1.setBackground(new Color(67, 160, 71)); // Verde más oscuro
+    }
+    
+    @Override
+    public void mouseExited(java.awt.event.MouseEvent evt) {
+        jButton1.setBackground(new Color(76, 175, 80)); // Verde original
+    }
+});
+
+// Hover para botón Limpiar
+Limpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseEntered(java.awt.event.MouseEvent evt) {
+        Limpiar.setBackground(new Color(255, 179, 0)); // Amarillo más oscuro
+    }
+    
+    @Override
+    public void mouseExited(java.awt.event.MouseEvent evt) {
+        Limpiar.setBackground(new Color(255, 193, 7)); // Amarillo original
+    }
+});
+
+// Hover para botón Regresar
+Regresar.addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseEntered(java.awt.event.MouseEvent evt) {
+        Regresar.setBackground(new Color(90, 98, 104)); // Gris más oscuro
+    }
+    
+    @Override
+    public void mouseExited(java.awt.event.MouseEvent evt) {
+        Regresar.setBackground(new Color(108, 117, 125)); // Gris original
+    }
+});
+
+// ===== CONFIGURACIÓN FINAL =====
+pack();
     }
 
     /**
