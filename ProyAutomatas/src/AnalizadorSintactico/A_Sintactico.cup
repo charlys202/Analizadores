@@ -1,0 +1,179 @@
+/*--------------- 1ra Area: Codigo de Usuario -----------------------*/
+package Analizadores;
+import java_cup.runtime.Symbol;
+import java.util.LinkedList;
+
+parser code
+{:
+    public String resultado = "";
+    public static LinkedList<TError> TablaES = new LinkedList<TError>();
+
+    public void syntax_error(Symbol s) {
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
+        System.out.println("\t\tLexema: " + lexema);
+        System.out.println("\t\tFila: " + fila);
+        System.out.println("\t\tColumna: " + columna);
+
+        TError datos = new TError(lexema, fila, columna, "Error Sintactico", "Caracter no esperado");
+        TablaES.add(datos);
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!! ");
+        System.out.println("\t\tLexema: " + lexema);
+        System.out.println("\t\tFila: " + fila);
+        System.out.println("\t\tColumna: " + columna);
+
+        TError datos = new TError(lexema, fila, columna, "Error Sintactico", "Caracter no esperado");
+        TablaES.add(datos);
+    }
+:}
+
+action code
+{:
+:}
+
+/*--------------- 2da Area: Declaraciones -----------------------*/
+terminal DIM, INTEGER, STRING, BOOLEAN, IF, THEN, ELSE, END, FOR, NEXT;
+terminal PLUS, MINUS, TIMES, DIVIDE, MOD;
+terminal NOT_EQUALS, LESS_EQUAL, GREATER_EQUAL, EQUALS, LESS_THAN, GREATER_THAN;
+terminal AND, OR, NOT;
+terminal LPAREN, RPAREN, SEMICOLON, COMMA;
+terminal String Identificador, Numero;
+
+non terminal String PROGRAMA, LISTA_SENTENCIAS, SENTENCIA;
+non terminal String DECLARACION, TIPO_DATO, ASIGNACION;
+non terminal String EXPRESION, EXPRESION_LOGICA, EXPRESION_RELACIONAL, EXPRESION_ARITMETICA;
+non terminal String FACTOR, SENTENCIA_IF, SENTENCIA_FOR;
+non terminal String LISTA_IDENTIFICADORES;
+
+precedence left OR;
+precedence left AND;
+precedence left NOT;
+precedence left EQUALS, NOT_EQUALS, LESS_THAN, GREATER_THAN, LESS_EQUAL, GREATER_EQUAL;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE, MOD;
+precedence left LPAREN, RPAREN;
+
+start with PROGRAMA;
+
+/*--------------- 3ra Area: Reglas Semanticas -----------------------*/
+
+PROGRAMA ::= LISTA_SENTENCIAS:a {: 
+    resultado = "Programa analizado correctamente:\n" + a; 
+    RESULT = a; 
+:};
+
+LISTA_SENTENCIAS ::= LISTA_SENTENCIAS:a SENTENCIA:b {: 
+    RESULT = a + "\n" + b; 
+:}
+| SENTENCIA:a {: 
+    RESULT = a; 
+:};
+
+SENTENCIA ::= DECLARACION:a SEMICOLON {: 
+    RESULT = "Declaracion: " + a; 
+:}
+| ASIGNACION:a SEMICOLON {: 
+    RESULT = "Asignacion: " + a; 
+:}
+| SENTENCIA_IF:a {: 
+    RESULT = "Condicional: " + a; 
+:}
+| SENTENCIA_FOR:a {: 
+    RESULT = "Ciclo For: " + a; 
+:};
+
+DECLARACION ::= DIM LISTA_IDENTIFICADORES:a TIPO_DATO:b {: 
+    RESULT = "Dim " + a + " As " + b; 
+:};
+
+LISTA_IDENTIFICADORES ::= LISTA_IDENTIFICADORES:a COMMA Identificador:b {: 
+    RESULT = a + ", " + b; 
+:}
+| Identificador:a {: 
+    RESULT = a; 
+:};
+
+TIPO_DATO ::= INTEGER {: RESULT = "Integer"; :}
+| STRING {: RESULT = "String"; :}
+| BOOLEAN {: RESULT = "Boolean"; :};
+
+ASIGNACION ::= Identificador:a EQUALS EXPRESION:b {: 
+    RESULT = a + " = " + b; 
+:};
+
+SENTENCIA_IF ::= IF EXPRESION_LOGICA:a THEN LISTA_SENTENCIAS:b END IF {: 
+    RESULT = "If " + a + " Then " + b + " End If"; 
+:}
+| IF EXPRESION_LOGICA:a THEN LISTA_SENTENCIAS:b ELSE LISTA_SENTENCIAS:c END IF {: 
+    RESULT = "If " + a + " Then " + b + " Else " + c + " End If"; 
+:};
+
+SENTENCIA_FOR ::= FOR Identificador:a EQUALS EXPRESION_ARITMETICA:b GREATER_THAN EXPRESION_ARITMETICA:c LISTA_SENTENCIAS:d NEXT Identificador:e {: 
+    RESULT = "For " + a + " = " + b + " To " + c + " " + d + " Next " + e; 
+:};
+
+EXPRESION ::= EXPRESION_LOGICA:a {: RESULT = a; :}
+| EXPRESION_ARITMETICA:a {: RESULT = a; :};  // <- Corregido aquí
+
+EXPRESION_LOGICA ::= EXPRESION_LOGICA:a AND EXPRESION_LOGICA:b {: 
+    RESULT = a + " And " + b; 
+:}
+| EXPRESION_LOGICA:a OR EXPRESION_LOGICA:b {: 
+    RESULT = a + " Or " + b; 
+:}
+| NOT EXPRESION_LOGICA:a {: 
+    RESULT = "Not " + a; 
+:}
+| EXPRESION_RELACIONAL:a {: 
+    RESULT = a; 
+:};
+
+EXPRESION_RELACIONAL ::= EXPRESION_ARITMETICA:a EQUALS EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " = " + b; 
+:}
+| EXPRESION_ARITMETICA:a NOT_EQUALS EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " <> " + b; 
+:}
+| EXPRESION_ARITMETICA:a LESS_THAN EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " < " + b; 
+:}
+| EXPRESION_ARITMETICA:a GREATER_THAN EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " > " + b; 
+:}
+| EXPRESION_ARITMETICA:a LESS_EQUAL EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " <= " + b; 
+:}
+| EXPRESION_ARITMETICA:a GREATER_EQUAL EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " >= " + b; 
+:};
+
+EXPRESION_ARITMETICA ::= EXPRESION_ARITMETICA:a PLUS EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " + " + b; 
+:}
+| EXPRESION_ARITMETICA:a MINUS EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " - " + b; 
+:}
+| EXPRESION_ARITMETICA:a TIMES EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " * " + b; 
+:}
+| EXPRESION_ARITMETICA:a DIVIDE EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " / " + b; 
+:}
+| EXPRESION_ARITMETICA:a MOD EXPRESION_ARITMETICA:b {: 
+    RESULT = a + " Mod " + b; 
+:}
+| FACTOR:a {: RESULT = a; :};
+
+FACTOR ::= LPAREN EXPRESION_ARITMETICA:a RPAREN {: RESULT = "(" + a + ")"; :}
+| Identificador:a {: RESULT = a; :}
+| Numero:a {: RESULT = a; :};
